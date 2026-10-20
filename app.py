@@ -62,4 +62,5 @@ demo = gr.Interface(
     api_name="system_one"
 )
 
-demo.launch()
+# 아래와 같이 똑같이 수정해 주세요
+demo.launch(server_name="0.0.0.0", server_port=10000)
