@@ -50,17 +50,24 @@ def evaluate_generic(state_input, questions_input):
             "error_message": str(e)
         }
 
-# Gradio Interface exposing the generic endpoint
+# gr.JSON 대신 gr.Textbox로 변경하여 입력 편의성 개선
 demo = gr.Interface(
     fn=evaluate_generic,
     inputs=[
-        gr.JSON(label="State (Any JSON or Text Object)"),
-        gr.JSON(label="Questions Schema (Choices, Scores, Nouls)")
+        gr.Textbox(
+            label="State (JSON 문자열 입력)", 
+            placeholder='{"text": "The product quality is surprisingly good."}',
+            lines=5
+        ),
+        gr.Textbox(
+            label="Questions Schema (JSON 문자열 입력)", 
+            placeholder='{\n  "sentiment": {\n    "choices": ["positive", "neutral", "negative"]\n  }\n}',
+            lines=5
+        )
     ],
     outputs=gr.JSON(label="Laya Evaluated Decision"),
     title="Laya Generic System-1 API",
     api_name="system_one"
 )
 
-# 아래와 같이 똑같이 수정해 주세요
 demo.launch(server_name="0.0.0.0", server_port=10000)
